@@ -59,7 +59,7 @@ jobs:
       - name: Download and test GH release
         run: |
           # Download the release artifact
-          curl -L -O "https://github.com/resonatehq/resonate/releases/download/${{ inputs.tag }}/${{ matrix.systems.file }}" -o resonate.tar.gz
+          curl -o resonate.tar.gz -L -O "https://github.com/${{ github.repository }}/releases/download/${{ inputs.tag }}/${{ matrix.systems.file }}"
 
           # Extract the artifact
           tar -xzf resonate.tar.gz
