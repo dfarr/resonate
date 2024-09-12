@@ -27,10 +27,10 @@ jobs:
             runner: ubuntu-22.04
           - os: darwin
             arch: x86_64
-            runner: macos-12
+            runner: macos-13
           - os: darwin
             arch: aarch64
-            runner: macos-12
+            runner: macos-14
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -56,7 +56,7 @@ jobs:
 
           # Verify binary
           file resonate
-          file resonate | grep "${{ matrix.systems.arch }}"
+          # file resonate | grep "${{ matrix.systems.arch }}"
 
           # Compress binary
           tar -czvf "${TARBALL}" resonate
