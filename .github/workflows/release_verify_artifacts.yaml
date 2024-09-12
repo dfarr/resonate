@@ -24,21 +24,21 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  # verify-github-image:
-  #   runs-on: ubuntu-22.04
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v4
-  #     - name: Download and test GHCR image
-  #       run: |
-  #         # Login to GHCR
-  #         echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+  verify-github-image:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Download and test GHCR image
+        run: |
+          # Login to GHCR
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-  #         # Pull the test image
-  #         docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ inputs.tag }}
+          # Pull the test image
+          docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ inputs.tag }}
 
-  #         # Run the test image
-  #         docker run --rm ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ inputs.tag }} dst run
+          # Run the test image
+          docker run --rm ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ inputs.tag }} dst run
 
   verify-github-release:
     runs-on: ${{ matrix.systems.runner }}

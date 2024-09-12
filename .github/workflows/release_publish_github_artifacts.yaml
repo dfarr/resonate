@@ -33,8 +33,7 @@ jobs:
           - os: darwin
             arch: aarch64
             arch_grep: arm64
-            runner: macos-13
-            # runner: macos-14
+            runner: macos-14
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -47,8 +46,6 @@ jobs:
 
       - name: Build Resonate binary
         run: |
-          set -x
-
           TARBALL="resonate_${{ matrix.systems.os }}_${{ matrix.systems.arch }}.tar.gz"
           TARBALL_CHECKSUM="${TARBALL}.sha256"
 
@@ -59,7 +56,7 @@ jobs:
           cp ./result/bin/resonate resonate
 
           # Verify binary
-          # file resonate | grep "${{ matrix.systems.arch_grep }}"
+          file resonate | grep "${{ matrix.systems.arch_grep }}"
 
           # Compress binary
           tar -czvf "${TARBALL}" resonate
