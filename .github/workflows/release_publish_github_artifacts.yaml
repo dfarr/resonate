@@ -34,15 +34,17 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
-      
+
       - name: Install Nix
         uses: DeterminateSystems/nix-installer-action@v13
 
       - name: Use Magic Nix Cache
         uses: DeterminateSystems/magic-nix-cache-action@v7
-      
+
       - name: Build Resonate binary
         run: |
+          set -x
+
           TARBALL="resonate_${{ matrix.systems.os }}_${{ matrix.systems.arch }}.tar.gz"
           TARBALL_CHECKSUM="${TARBALL}.sha256"
 
@@ -51,6 +53,10 @@ jobs:
 
           # Copy into root
           cp ./result/bin/resonate resonate
+
+          # Verify binary
+          file resonate
+          file resonate | grep "${{ matrix.systems.arch }}"
 
           # Compress binary
           tar -czvf "${TARBALL}" resonate
@@ -68,6 +74,6 @@ jobs:
         run: |
           TARBALL="resonate_${{ matrix.systems.os }}_${{ matrix.systems.arch }}.tar.gz"
           TARBALL_CHECKSUM="${TARBALL}.sha256"
-          
+
           gh release upload ${{ inputs.tag }} "${TARBALL}" --clobber
           gh release upload ${{ inputs.tag }} "${TARBALL_CHECKSUM}" --clobber
